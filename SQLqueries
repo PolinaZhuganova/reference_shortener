@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS shortener;
+
+CREATE TABLE IF NOT EXISTS shortener
+(
+    id           SERIAL PRIMARY KEY,
+    originalUrl varchar,
+     shortUrl    varchar(20) not null unique
+
+);
+INSERT INTO shortener (id, originalUrl, shortUrl)
+VALUES (1, 'https://www.youtube.com/', '1');
+
+INSERT INTO shortener (id, originalUrl, shortUrl)
+VALUES (2, 'https://www.engvid.com/', '2');
+
+INSERT INTO shortener (id, originalUrl, shortUrl)
+VALUES (3, 'https://instagram.com',  '3');
