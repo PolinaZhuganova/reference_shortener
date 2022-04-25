@@ -4,9 +4,11 @@ import com.example.reference_shortener.mapper.ShortenerMapper;
 import com.example.reference_shortener.model.Shortener;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -25,7 +27,7 @@ public class ShortenerRepository {
 	}
 
 	public void saveShortUrl(String originalUrl, String shortUrl) {
-		String sql = "insert into shortener(originalUrl,shortUrl) values(?,?)";
+		String sql = "insert into shortener(originalUrl,shortUrl, created_at) values(?,?, NOW())";
 		jdbcTemplate.update(sql, originalUrl, shortUrl);
 	}
 
@@ -40,4 +42,10 @@ public class ShortenerRepository {
 		String sql = "delete from shortener where id = ?";
 		jdbcTemplate.update(sql, id);
 	}
+
+	public void clearOldLinks() {
+		String clear = "delete from shortener where created_at < (now()- interval '5 day');";
+		jdbcTemplate.update(clear);
+	}
+
 }

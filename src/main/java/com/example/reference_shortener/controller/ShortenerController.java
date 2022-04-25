@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.time.ZonedDateTime;
+
 /**
  * Класс ShortenerController
  */
@@ -40,8 +42,8 @@ public class ShortenerController {
 		return "modify_links";
 	}
 
-	@GetMapping("/")
-	public String goTo() {
+	@GetMapping("/*")
+		public String goTo() {
 		String baseUrl = ServletUriComponentsBuilder.fromCurrentRequest().toUriString();
 		String goToUrl = service.findOriginalUrl(baseUrl);
 		return "redirect:" + goToUrl;
